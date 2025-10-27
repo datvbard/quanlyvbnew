@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { PlusCircleIcon, DocumentTextIcon, ClipboardListIcon, UserCircleIcon, CalendarIcon, PencilAltIcon } from './icons';
+import { PlusCircleIcon, DocumentTextIcon, ClipboardListIcon, UserCircleIcon, CalendarIcon, PencilAltIcon, ArrowUpTrayIcon, XCircleIcon } from './icons';
 import { Document, DocumentType } from '../types';
 
 interface AddDocumentFormProps {
@@ -14,6 +14,7 @@ const initialFormState = {
     updatedBy: { name: '' },
     expiryDate: '',
     summary: '',
+    file: undefined as File | undefined,
 };
 
 export const AddDocumentForm: React.FC<AddDocumentFormProps> = ({ onAddDocument, documentTypes }) => {
@@ -25,6 +26,12 @@ export const AddDocumentForm: React.FC<AddDocumentFormProps> = ({ onAddDocument,
             setFormData(prev => ({ ...prev, updatedBy: { name: value } }));
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
+        }
+    };
+    
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setFormData(prev => ({ ...prev, file: e.target.files![0] }));
         }
     };
 
@@ -101,6 +108,32 @@ export const AddDocumentForm: React.FC<AddDocumentFormProps> = ({ onAddDocument,
                         rows={3}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-brand-maroon focus:border-brand-maroon"
                     />
+                </div>
+
+                <div>
+                    <label htmlFor="file-upload" className="flex items-center text-sm font-medium text-gray-700 mb-1">
+                        <ArrowUpTrayIcon className="w-5 h-5 text-gray-500" />
+                        <span className="ml-2">Tệp đính kèm</span>
+                    </label>
+                    <div className="mt-1 flex items-center">
+                        <label htmlFor="file-upload" className="cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-maroon">
+                            <span>Chọn tệp</span>
+                            <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleFileChange} />
+                        </label>
+                        {formData.file && (
+                            <div className="ml-4 flex items-center space-x-2">
+                                <span className="text-sm text-gray-600">{formData.file.name}</span>
+                                <button 
+                                    type="button" 
+                                    onClick={() => setFormData(prev => ({...prev, file: undefined}))}
+                                    className="text-gray-400 hover:text-gray-600"
+                                    aria-label="Remove file"
+                                >
+                                    <XCircleIcon className="w-5 h-5" />
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
                 
                 <div className="flex justify-start">

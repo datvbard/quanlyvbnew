@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useCallback } from 'react';
 import { Header } from './components/Header';
 import { AddDocumentForm } from './components/AddDocumentForm';
@@ -75,7 +76,8 @@ const App: React.FC = () => {
     const viewDocument = useCallback((id: string) => {
         const doc = documents.find(d => d.id === id);
         if (doc) {
-            alert(`Xem chi tiết văn bản: ${doc.name}\n\nNội dung: ${doc.summary}\nNgười cập nhật: ${doc.updatedBy.name}\nNgày hết hạn: ${formatDate(doc.expiryDate)}`);
+            const fileInfo = doc.file ? `\nTệp đính kèm: ${doc.file.name}` : '\nKhông có tệp đính kèm.';
+            alert(`Xem chi tiết văn bản: ${doc.name}\n\nNội dung: ${doc.summary}\nNgười cập nhật: ${doc.updatedBy.name}\nNgày hết hạn: ${formatDate(doc.expiryDate)}${fileInfo}`);
         }
     }, [documents]);
 

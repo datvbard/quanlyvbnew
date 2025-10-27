@@ -16,6 +16,7 @@ export interface Document {
     updatedBy: {
         name: string;
     };
+    file?: File;
 }
 
 export interface DocumentWithStatus extends Document {

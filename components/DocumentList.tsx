@@ -1,9 +1,10 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { DocumentWithStatus, DocumentStatus } from '../types';
 import { 
     ListIcon, ArrowDownTrayIcon, ArrowUpTrayIcon, UsersIcon, CreditCardIcon, 
     DocumentIcon, XCircleIcon, ExclamationTriangleIcon, CheckCircleIcon, UserCircleIcon, 
-    PencilIcon, TrashIcon, EyeIcon, Cog6ToothIcon
+    PencilIcon, TrashIcon, EyeIcon, Cog6ToothIcon, PaperClipIcon
 } from './icons';
 
 interface DocumentListProps {
@@ -121,7 +122,12 @@ export const DocumentList: React.FC<DocumentListProps> = ({ documents, onView, o
                     <tbody className="bg-white divide-y divide-gray-200">
                         {documents.map((doc) => (
                             <tr key={doc.id}>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{doc.name}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    <div className="flex items-center">
+                                        <span>{doc.name}</span>
+                                        {doc.file && <PaperClipIcon className="w-4 h-4 ml-2 text-gray-500" title={`File: ${doc.file.name}`} />}
+                                    </div>
+                                </td>
                                 <td className="px-6 py-4 whitespace-normal text-sm text-gray-500 max-w-xs">{doc.summary}</td>
                                 {visibleColumns.type && (
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
