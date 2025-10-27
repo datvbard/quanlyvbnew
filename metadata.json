@@ -1,0 +1,5 @@
+{
+  "name": "Document Validity Manager",
+  "description": "A web application to manage and track the validity period of documents, contracts, and other important papers. It provides a clear dashboard, filtering, and search functionalities to keep track of document statuses like valid, expiring soon, and expired.",
+  "requestFramePermissions": []
+}
